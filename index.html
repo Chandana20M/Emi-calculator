@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EMI Calculator</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 100px;
+      color: blueviolet;
+      background-color: rgb(190, 177, 161);
+    }
+    
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body><div class="jumbotron text-center">
+  <h2>EMI Calculator</h2>
+
+  <label for="principal">Principal Amt:</label>
+  <input type="number" id="principal" placeholder=" principal " required></br></br>
+
+  <label for="rate"> Interest Rate :</label>
+  <input type="number" step="0.01" id="rate" placeholder=" interest " required></br></br>
+
+  <label for="duration">Loan Duration:</label>
+  <input type="number" id="duration" placeholder=" loan duration" required><br/></br>
+
+  <button onclick="calculateEMI()">Calculate EMI</button>
+
+  <div id="result"></div>
+
+  <script>
+    function calculateEMI() {
+      const principal = parseFloat(document.getElementById('principal').value);
+      const annualRate = parseFloat(document.getElementById('rate').value);
+      const durationYears = parseFloat(document.getElementById('duration').value);
+
+      if (!principal || !annualRate || !durationYears) {
+        document.getElementById('result').innerText = "Please enter all values.";
+        return;
+      }
+
+      const monthlyRate = annualRate / 12 / 100;
+      const totalMonths = durationYears * 12;
+
+      const emi = (principal * monthlyRate * Math.pow(1 + monthlyRate, totalMonths)) /
+                  (Math.pow(1 + monthlyRate, totalMonths) - 1);
+
+      document.getElementById('result').innerText = `Your monthly EMI is ₹${emi.toFixed(2)}`;
+    }
+  </script>
+</div>
+</body>
+</html>
